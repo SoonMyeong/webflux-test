@@ -1,5 +1,7 @@
 package com.example.soon.handler;
 
+import com.example.soon.model.dto.ProductDto;
+import com.example.soon.model.entity.Product;
 import com.example.soon.model.vo.ProductVo;
 import com.example.soon.router.Router;
 import com.example.soon.service.SoonService;
@@ -44,17 +46,19 @@ class SoonHandlerTest {
                 .name("쿠앤크")
                 .price(1000)
                 .build();
+
         String req = "{\"name\":\"쿠앤크\",\"price\":1000}";
 
-        when(service.createProduct(vo)).thenReturn(Mono.just("성공"));
+        when(service.createProduct(vo)).thenReturn(Mono.just(vo));
         this.webTestClient.post().uri("/create")
                 .header("Content-Type","application/json")
                 .bodyValue(req)
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(String.class)
+                .expectBody(ProductDto.class)
                 .value(result -> {
-                    assertEquals(result, "성공");
+                    assertEquals(result.getName(), "쿠앤크");
+                    assertEquals(result.getPrice(), 1000);
                 });
 
     }

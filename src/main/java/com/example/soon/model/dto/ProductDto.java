@@ -1,11 +1,15 @@
 package com.example.soon.model.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-public class ProductReq {
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProductDto {
     private String name;
     private int price;
 }
